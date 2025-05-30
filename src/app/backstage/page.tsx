@@ -6,6 +6,7 @@ import Captions from 'yet-another-react-lightbox/plugins/captions';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 
+
 const imageCount = 60;
 const images = Array.from({ length: imageCount }, (_, i) => {
   const num = i + 1;
