@@ -1,103 +1,136 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useRef, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+const references = [
+  {
+    id: 1,
+    text:
+      "Naprosto bezkonkurenční! Měli jsme na svatbě víc jak půlku hostů z Irska a ti dodnes mluví o nejlepší svatbě a to především právě diky klukům z Videojinak!",
+    sign: "Nelli Přibáňová (svatba)",
+  },
+  {
+    id: 2,
+    text: "Je na 100% jasný, že s takovým profíkem budeme letos znova točit a s nesmírnou chutí!!! Lukáš je super profesionál na nápady a kameru.",
+    sign: "Ondřej Demut (promo automobilových závodů)",
+  },
+  {
+    id: 3,
+    text: "Termín svatby jsme vybírali dle možnosti natáčení, protože svatbu bez videa od nich nechcete :) Doporučuju všem!",
+    sign: "Nella Šolcová (svatba)",
+  },
+  {
+    id: 4,
+    text: "Šimi nám točil v létě svatbičku, a taky točil svatbičku ségře, a kámošce, a ... a to vlastně asi vypovídá o všem  Dáváme hodnocení 1853 ze 100!",
+    sign: "Áňa Vaníčková (svatba)",
+  },
+  {
+    id: 5,
+    text: "Kluci nám natáčeli firemní promo video a výsledek, rychlost a osobní přístup byl na top úrovni. Do budoucna cokoliv už jen s VIDEOJINAK.",
+    sign: "Lukáš Málek (promo na restauraci)",
+  },
+];
+
+const companies = [
+  "Rimmel", "Škoda", "Nescafé", "Radio Frekvence 1", "Makro", "Fany Gastro",
+  "Bidvest", "COTY", "Timelab", "Sally Hansen", "Astor", "Mary Key", "Narex", "Oktagon",
+  "Gestamp", "Cushman & Wakefield", "Remax G8", "Tessuto", "Xandor", "BOS", "Bohemia Hop",
+  "Nemovito", "Extreme Hobby", "Ruda z Ostravy", "Česká Federace Aikido", "Stavebniny VHV",
+  "Eurosupport", "Černý Žaludi", "Wheelabrator", "Biopreparáty", "Reinders MMA", "Cavalier", "Město Žatec",
+];
+
+export default function HomePage() {
+  const desktopRef = useRef<HTMLVideoElement>(null);
+  const mobileRef = useRef<HTMLVideoElement>(null);
+  const [currentRef, setCurrentRef] = useState(0);
+
+  useEffect(() => {
+    desktopRef.current?.play().catch(() => {});
+    mobileRef.current?.play().catch(() => {});
+    const interval = setInterval(() => {
+      setCurrentRef((prev) => (prev + 1) % references.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const prev = () => setCurrentRef((prev) => (prev - 1 + references.length) % references.length);
+  const next = () => setCurrentRef((prev) => (prev + 1) % references.length);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <>
+      {/* VIDEO SEKCE */}
+      <div className="relative min-h-screen overflow-hidden">
+        <video
+          ref={desktopRef}
+          className="hidden md:block absolute top-0 left-0 w-full h-full object-cover"
+          src="/video/title-video-desktop.mp4"
+          muted
+          loop
+          playsInline
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <video
+          ref={mobileRef}
+          className="block md:hidden absolute top-0 left-0 w-full h-full object-cover"
+          src="/video/title-video-mobil.mp4"
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute bottom-20 right-0 left-0 flex items-center justify-center text-white text-center">
+          <div className="bg-white/80 text-black p-6 rounded-lg max-w-xl">
+            <p className="mb-4 text-lg">
+              Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak jedině super 😄
+            </p>
+            <div className="flex gap-3 justify-center flex-wrap">
+              <a href="/svatebni-nataceni" className="btn">SVATBY</a>
+              <a href="/promovidea" className="btn">PROMO</a>
+              <a href="#recenze" className="btn">RECENZE</a>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      {/* RECENZE */}
+      <section id="recenze" className="pt-28 pb-20 px-6 bg-gray-50 text-center relative">
+        <h2 className="text-3xl font-bold mb-6">Recenze</h2>
+        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow p-6 relative">
+          <p className="text-lg italic mb-4">"{references[currentRef].text}"</p>
+          <p className="font-semibold text-gray-600">{references[currentRef].sign}</p>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={prev}
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 text-xl text-gray-600 hover:text-black"
+            aria-label="Předchozí recenze"
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+            onClick={next}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 text-xl text-gray-600 hover:text-black"
+            aria-label="Další recenze"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+
+        <div className="mt-6">
+          <a href="#spoluprace" className="btn">Spolupráce s</a>
+        </div>
+      </section>
+
+      {/* SPOLUPRÁCE */}
+      <section id="spoluprace" className="py-16 px-6 bg-white scroll-mt-28">
+        <h2 className="text-3xl font-bold mb-8 text-center">Spolupráce s</h2>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {companies.map((name, idx) => (
+            <div key={idx} className="px-4 py-2 bg-gray-100 rounded shadow text-sm font-medium hover:bg-gray-200 transition">
+              {name}
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
