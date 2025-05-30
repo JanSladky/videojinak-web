@@ -95,7 +95,7 @@ export default function HomePage() {
       <section id="recenze" className="pt-28 pb-20 px-6 bg-gray-50 text-center relative">
         <h2 className="text-3xl font-bold mb-6">Recenze</h2>
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow p-6 relative">
-          <p className="text-lg italic mb-4">"{references[currentRef].text}"</p>
+          <p className="text-lg italic mb-4">{`"${references[currentRef].text}"`}</p>
           <p className="font-semibold text-gray-600">{references[currentRef].sign}</p>
 
           {/* Navigation arrows */}
