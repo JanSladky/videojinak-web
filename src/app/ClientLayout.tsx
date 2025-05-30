@@ -5,18 +5,15 @@ import Image from 'next/image';
 import { ReactNode, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
-export default function ClientLayout({
-  children,
-  mainClass = 'pt-[80px]',
-}: {
-  children: ReactNode;
-  mainClass?: string;
-}) {
+export default function ClientLayout({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+
+  const isHomepage = pathname === '/';
+  const mainClass = isHomepage ? '' : 'pt-[80px]';
 
   const navItems = [
     { href: '/', label: 'Úvod' },
@@ -42,7 +39,7 @@ export default function ClientLayout({
             />
           </Link>
 
-          {/* Hamburger – zobrazuje se do LG */}
+          {/* Hamburger – zobrazit do velikosti LG */}
           <button
             onClick={toggleMenu}
             className="lg:hidden focus:outline-none text-gray-800 text-4xl"
@@ -51,7 +48,7 @@ export default function ClientLayout({
             {menuOpen ? '✕' : '☰'}
           </button>
 
-          {/* Desktop menu – od LG výš */}
+          {/* Desktop menu – až od LG */}
           <nav className="hidden lg:flex flex-wrap gap-x-4 gap-y-2 font-medium max-w-full">
             {navItems.map((item) => (
               <Link
