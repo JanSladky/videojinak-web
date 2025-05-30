@@ -1,19 +1,32 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { ReactNode, useState } from "react";
-import Image from 'next/image'
-import { usePathname } from "next/navigation";
+import Link from 'next/link';
+import Image from 'next/image';
+import { ReactNode, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
-export default function ClientLayout({ children }: { children: ReactNode }) {
+export default function ClientLayout({
+  children,
+  mainClass = 'pt-[80px]',
+}: {
+  children: ReactNode;
+  mainClass?: string;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 
-  const isHome = pathname === '/'
-  const mainClass = isHome ? "" : "mt-20"
+  const navItems = [
+    { href: '/', label: 'Úvod' },
+    { href: '/o-mne', label: 'O mně' },
+    { href: '/showreel', label: 'Showreel' },
+    { href: '/svatebni-nataceni', label: 'Svatební natáčení' },
+    { href: '/promovidea', label: 'Promovidea' },
+    { href: '/backstage', label: 'BackStage' },
+    { href: '/kontakt', label: 'Kontakt' },
+  ];
 
   return (
     <>
@@ -23,59 +36,56 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
             <Image
               src="/images/logo.png"
               alt="Videojinak logo"
-              width={160} // můžeš upravit podle velikosti loga
+              width={160}
               height={40}
               priority
             />
           </Link>
 
-          {/* Hamburger */}
-          <button onClick={toggleMenu} className="md:hidden focus:outline-none text-gray-800" aria-label="Toggle menu">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+          {/* Hamburger – zobrazuje se do LG */}
+          <button
+            onClick={toggleMenu}
+            className="lg:hidden focus:outline-none text-gray-800 text-4xl"
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? '✕' : '☰'}
           </button>
 
-          {/* Desktop menu */}
-          <nav className="hidden md:flex space-x-4 font-medium">
-            <Link href="/">Úvod</Link>
-            <Link href="/o-mne">O mně</Link>
-            <Link href="/showreel">Showreel</Link>
-            <Link href="/svatebni-nataceni">Svatební natáčení</Link>
-            <Link href="/promovidea">Promovidea</Link>
-            <Link href="/backstage">BackStage</Link>
-            <Link href="/kontakt">Kontakt</Link>
+          {/* Desktop menu – od LG výš */}
+          <nav className="hidden lg:flex flex-wrap gap-x-4 gap-y-2 font-medium max-w-full">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-3 py-2 rounded transition-colors ${
+                  pathname === item.href
+                    ? 'text-[#009ddc] font-semibold'
+                    : 'text-gray-800 hover:text-blue-600'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
 
         {/* Mobile menu */}
         {menuOpen && (
-          <nav className="md:hidden px-4 pb-4 pt-2 space-y-2 font-medium bg-white border-t border-gray-200 shadow">
-            <Link href="/" onClick={closeMenu} className="block">
-              Úvod
-            </Link>
-            <Link href="/o-mne" onClick={closeMenu} className="block">
-              O mně
-            </Link>
-            <Link href="/showreel" onClick={closeMenu} className="block">
-              Showreel
-            </Link>
-            <Link href="/svatebni-nataceni" onClick={closeMenu} className="block">
-              Svatební natáčení
-            </Link>
-            <Link href="/promovidea" onClick={closeMenu} className="block">
-              Promovidea
-            </Link>
-            <Link href="/backstage" onClick={closeMenu} className="block">
-              BackStage
-            </Link>
-            <Link href="/kontakt" onClick={closeMenu} className="block">
-              Kontakt
-            </Link>
+          <nav className="lg:hidden px-6 py-10 space-y-6 text-xl font-semibold bg-white border-t border-gray-200 shadow min-h-screen flex flex-col items-center justify-center text-center">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={closeMenu}
+                className={`block w-full hover:text-blue-600 transition-colors ${
+                  pathname === item.href
+                    ? 'text-[#009ddc] font-semibold'
+                    : 'text-gray-800'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
         )}
       </header>

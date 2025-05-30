@@ -33,11 +33,39 @@ const references = [
 ];
 
 const companies = [
-  "Rimmel", "Škoda", "Nescafé", "Radio Frekvence 1", "Makro", "Fany Gastro",
-  "Bidvest", "COTY", "Timelab", "Sally Hansen", "Astor", "Mary Key", "Narex", "Oktagon",
-  "Gestamp", "Cushman & Wakefield", "Remax G8", "Tessuto", "Xandor", "BOS", "Bohemia Hop",
-  "Nemovito", "Extreme Hobby", "Ruda z Ostravy", "Česká Federace Aikido", "Stavebniny VHV",
-  "Eurosupport", "Černý Žaludi", "Wheelabrator", "Biopreparáty", "Reinders MMA", "Cavalier", "Město Žatec",
+  "Rimmel",
+  "Škoda",
+  "Nescafé",
+  "Radio Frekvence 1",
+  "Makro",
+  "Fany Gastro",
+  "Bidvest",
+  "COTY",
+  "Timelab",
+  "Sally Hansen",
+  "Astor",
+  "Mary Key",
+  "Narex",
+  "Oktagon",
+  "Gestamp",
+  "Cushman & Wakefield",
+  "Remax G8",
+  "Tessuto",
+  "Xandor",
+  "BOS",
+  "Bohemia Hop",
+  "Nemovito",
+  "Extreme Hobby",
+  "Ruda z Ostravy",
+  "Česká Federace Aikido",
+  "Stavebniny VHV",
+  "Eurosupport",
+  "Černý Žaludi",
+  "Wheelabrator",
+  "Biopreparáty",
+  "Reinders MMA",
+  "Cavalier",
+  "Město Žatec",
 ];
 
 export default function HomePage() {
@@ -77,15 +105,22 @@ export default function HomePage() {
           loop
           playsInline
         />
-        <div className="absolute bottom-20 right-0 left-0 flex items-center justify-center text-white text-center">
-          <div className="bg-white/80 text-black p-6 rounded-lg max-w-xl">
-            <p className="mb-4 text-lg">
-              Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak jedině super 😄
+        <div className="absolute bottom-10 right-0 left-0 flex items-center justify-center text-white text-center">
+          <div className="bg-white/80 text-black px-4 py-4 sm:p-6 rounded-lg max-w-xs sm:max-w-xl">
+            <p className="mb-4 text-sm sm:text-base leading-snug">
+              Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak
+              jedině super 😄
             </p>
-            <div className="flex gap-3 justify-center flex-wrap">
-              <a href="/svatebni-nataceni" className="btn">SVATBY</a>
-              <a href="/promovidea" className="btn">PROMO</a>
-              <a href="#recenze" className="btn">RECENZE</a>
+            <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
+              <a href="/svatebni-nataceni" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
+                SVATBY
+              </a>
+              <a href="/promovidea" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
+                PROMO
+              </a>
+              <a href="#recenze" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
+                RECENZE
+              </a>
             </div>
           </div>
         </div>
@@ -116,7 +151,9 @@ export default function HomePage() {
         </div>
 
         <div className="mt-6">
-          <a href="#spoluprace" className="btn">Spolupráce s</a>
+          <a href="#spoluprace" className="btn">
+            Spolupráce s
+          </a>
         </div>
       </section>
 
