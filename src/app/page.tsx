@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const references = [
   {
@@ -157,26 +156,94 @@ const companies = [
 ];
 
 export default function HomePage() {
-  const desktopRef = useRef<HTMLVideoElement>(null);
-  const mobileRef = useRef<HTMLVideoElement>(null);
-  const [currentRef, setCurrentRef] = useState(0);
+  const desktopRef = useRef<HTMLVideoElement | null>(null);
+  const mobileRef = useRef<HTMLVideoElement | null>(null);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const [autoSlide, setAutoSlide] = useState(true);
+
+  const stopAutoSlide = () => setAutoSlide(false);
+  const resumeAutoSlide = () => setTimeout(() => setAutoSlide(true), 8000);
+
+  useEffect(() => {
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+    setViewportHeight();
+    window.addEventListener("resize", setViewportHeight);
+    return () => window.removeEventListener("resize", setViewportHeight);
+  }, []);
 
   useEffect(() => {
     desktopRef.current?.play().catch(() => {});
     mobileRef.current?.play().catch(() => {});
-    const interval = setInterval(() => {
-      setCurrentRef((prev) => (prev + 1) % references.length);
-    }, 6000);
-    return () => clearInterval(interval);
   }, []);
 
-  const prev = () => setCurrentRef((prev) => (prev - 1 + references.length) % references.length);
-  const next = () => setCurrentRef((prev) => (prev + 1) % references.length);
+  useEffect(() => {
+    if (!sliderRef.current || !autoSlide) return;
+    const slider = sliderRef.current;
+    const scrollAmount = slider.clientWidth;
+    const interval = setInterval(() => {
+      slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      if (slider.scrollLeft + scrollAmount >= slider.scrollWidth) {
+        setTimeout(() => {
+          slider.scrollTo({ left: 0, behavior: "smooth" });
+        }, 1000);
+      }
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [autoSlide]);
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    const start = (e: MouseEvent | TouchEvent) => {
+      isDown = true;
+      startX = (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX) - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+      slider.classList.add("cursor-grabbing");
+    };
+
+    const end = () => {
+      isDown = false;
+      slider.classList.remove("cursor-grabbing");
+    };
+
+    const move = (e: MouseEvent | TouchEvent) => {
+      if (!isDown) return;
+      const x = (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX) - slider.offsetLeft;
+      const walk = (x - startX) * 1.2;
+      slider.scrollLeft = scrollLeft - walk;
+    };
+
+    slider.addEventListener("mousedown", start);
+    slider.addEventListener("touchstart", start);
+    slider.addEventListener("mouseup", end);
+    slider.addEventListener("touchend", end);
+    slider.addEventListener("mousemove", move);
+    slider.addEventListener("touchmove", move);
+    slider.addEventListener("mouseleave", end);
+
+    return () => {
+      slider.removeEventListener("mousedown", start);
+      slider.removeEventListener("touchstart", start);
+      slider.removeEventListener("mouseup", end);
+      slider.removeEventListener("touchend", end);
+      slider.removeEventListener("mousemove", move);
+      slider.removeEventListener("touchmove", move);
+      slider.removeEventListener("mouseleave", end);
+    };
+  }, []);
 
   return (
     <>
       {/* VIDEO SEKCE */}
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative" style={{ minHeight: "calc(var(--vh, 1vh) * 100)" }}>
         <video
           ref={desktopRef}
           className="hidden md:block absolute top-0 left-0 w-full h-full object-cover"
@@ -193,8 +260,8 @@ export default function HomePage() {
           loop
           playsInline
         />
-        <div className="absolute bottom-10 right-0 left-0 flex items-center justify-center text-white text-center">
-          <div className="bg-white/80 text-black px-4 py-4 sm:p-6 rounded-lg max-w-xs sm:max-w-xl">
+        <div className="absolute inset-0 flex justify-center items-end text-white text-center px-4 pb-[calc(env(safe-area-inset-bottom)+20px)] sm:pb-12">
+          <div className="bg-white/80 text-black px-4 py-4 sm:p-6 rounded-lg max-w-xs sm:max-w-xl w-full sm:w-auto">
             <p className="mb-4 text-sm sm:text-base leading-snug">
               Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak
               jedině super 😄
@@ -217,27 +284,25 @@ export default function HomePage() {
       {/* RECENZE */}
       <section id="recenze" className="pt-28 pb-20 px-6 bg-gray-50 text-center relative">
         <h2 className="text-3xl font-bold mb-6">Recenze</h2>
-        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow p-6 relative">
-          <p className="text-lg italic mb-4">{`"${references[currentRef].text}"`}</p>
-          <p className="font-semibold text-gray-600">{references[currentRef].sign}</p>
-
-          {/* Navigation arrows */}
-          <button
-            onClick={prev}
-            className="absolute top-1/2 left-4 transform -translate-y-1/2 text-xl text-gray-600 hover:text-black"
-            aria-label="Předchozí recenze"
-          >
-            <FaChevronLeft />
-          </button>
-          <button
-            onClick={next}
-            className="absolute top-1/2 right-4 transform -translate-y-1/2 text-xl text-gray-600 hover:text-black"
-            aria-label="Další recenze"
-          >
-            <FaChevronRight />
-          </button>
+        <div
+          ref={sliderRef}
+          className="flex gap-4 overflow-x-auto px-1 scrollbar-hide cursor-grab snap-x snap-mandatory scroll-smooth"
+          style={{ WebkitOverflowScrolling: "touch" }}
+          onMouseEnter={stopAutoSlide}
+          onMouseLeave={resumeAutoSlide}
+        >
+          {references.map((ref) => (
+            <div
+              key={ref.id}
+              className="snap-center min-w-[90%] sm:min-w-[500px] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[180px] px-4"
+            >
+              <div className="flex flex-col justify-center items-center w-full max-w-xl overflow-hidden">
+                <p className="text-base sm:text-lg italic leading-relaxed mb-4 break-words">{`"${ref.text}"`}</p>
+                <p className="font-semibold text-gray-600 text-sm sm:text-base">{ref.sign}</p>
+              </div>
+            </div>
+          ))}
         </div>
-
         <div className="mt-6">
           <a href="#spoluprace" className="btn">
             Spolupráce s
