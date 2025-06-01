@@ -294,7 +294,7 @@ export default function HomePage() {
           {references.map((ref) => (
             <div
               key={ref.id}
-              className="snap-center min-w-[90%] sm:min-w-[500px] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[180px] px-4"
+              className="snap-center min-w-[90%] sm:min-w-[500px] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[200px] px-4"
             >
               <div className="flex flex-col justify-center items-center w-full max-w-xl overflow-hidden">
                 <p className="text-base sm:text-lg italic leading-relaxed mb-4 break-words">{`"${ref.text}"`}</p>
