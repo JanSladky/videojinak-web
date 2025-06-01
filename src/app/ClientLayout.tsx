@@ -75,6 +75,9 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       </header>
 
       <main className={mainClass}>{children}</main>
+       <footer className="text-center text-sm py-6 bg-black text-white">
+        © {new Date().getFullYear()} <span className="">Web vyrobil - </span><a href="https://www.jansladky.eu" target="_blank" className="underline">Jan Sladký</a>
+      </footer>
     </>
   );
 }
