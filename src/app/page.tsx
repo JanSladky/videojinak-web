@@ -72,6 +72,16 @@ export default function HomePage() {
   const desktopRef = useRef<HTMLVideoElement>(null);
   const mobileRef = useRef<HTMLVideoElement>(null);
   const [currentRef, setCurrentRef] = useState(0);
+  useEffect(() => {
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
+    setViewportHeight();
+    window.addEventListener("resize", setViewportHeight);
+    return () => window.removeEventListener("resize", setViewportHeight);
+  }, []);
 
   useEffect(() => {
     desktopRef.current?.play().catch(() => {});
@@ -88,7 +98,7 @@ export default function HomePage() {
   return (
     <>
       {/* VIDEO SEKCE */}
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative" style={{ minHeight: "calc(var(--vh, 1vh) * 100)" }}>
         <video
           ref={desktopRef}
           className="hidden md:block absolute top-0 left-0 w-full h-full object-cover"
@@ -105,8 +115,8 @@ export default function HomePage() {
           loop
           playsInline
         />
-        <div className="absolute bottom-10 right-0 left-0 flex items-center justify-center text-white text-center">
-          <div className="bg-white/80 text-black px-4 py-4 sm:p-6 rounded-lg max-w-xs sm:max-w-xl">
+        <div className="absolute inset-0 flex justify-center items-end sm:items-center text-white text-center px-4 pb-[calc(env(safe-area-inset-bottom)+20px)] sm:pb-0">
+          <div className="bg-white/80 text-black px-4 py-4 sm:p-6 rounded-lg max-w-xs sm:max-w-xl w-full sm:w-auto">
             <p className="mb-4 text-sm sm:text-base leading-snug">
               Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak
               jedině super 😄
