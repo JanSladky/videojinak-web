@@ -49,7 +49,7 @@ export default function SvatebniNataceniPage() {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-10">
       <p className="text-lg">
-        Jestliže hledáte někoho, kdo vám jen nějak natočí svatbu, tak to tady nebudete správně. 😁 Na svatebních videích si fakt dáváme záležet… Chceme, abyste
+        Jestliže hledáte někoho, kdo vám jen nějak natočí svatbu, tak to tady nebudete správně. 😄 Na svatebních videích si fakt dáváme záležet… Chceme, abyste
         se po shlédnutí regulérně smáli, aby vás video pobavilo, přesto abyste si na svatbu díky našemu videjku zavzpomínali jako na parádní párty a ještě vám k
         tomu ukápla i nějaká ta slza.
       </p>

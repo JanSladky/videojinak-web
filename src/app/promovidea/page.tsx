@@ -87,7 +87,6 @@ export default function PromoVideoPage() {
           <li>Reportáže z eventů a akcí</li>
           <li>Firemní medailonky</li>
           <li>Reklamní klipy pro sociální sítě</li>
-          <li>Animované infografiky a explainer videa</li>
         </ul>
       </div>
 
