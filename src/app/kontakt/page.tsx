@@ -4,6 +4,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 
+
 export default function KontaktPage() {
   const [activeTab, setActiveTab] = useState<"svatebni" | "firemni">("svatebni");
 

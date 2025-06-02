@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
+import Link from "next/link";
 export default function HomePage() {
   const desktopRef = useRef<HTMLVideoElement | null>(null);
   const mobileRef = useRef<HTMLVideoElement | null>(null);
@@ -317,15 +317,15 @@ export default function HomePage() {
               jedině super 😄
             </p>
             <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
-              <a href="/svatebni-nataceni" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
+              <Link href="/svatebni-nataceni" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
                 SVATBY
-              </a>
-              <a href="/promovidea" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
+              </Link>
+              <Link href="/promovidea" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
                 PROMO
-              </a>
-              <a href="#recenze" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
+              </Link>
+              <Link href="#recenze" className="px-3 py-1.5 bg-black text-white rounded hover:bg-gray-800 transition text-sm sm:text-base">
                 RECENZE
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -362,9 +362,9 @@ export default function HomePage() {
           ))}
         </div>
         <div className="mt-6">
-          <a href="#spoluprace" className="btn">
+          <Link href="#spoluprace" className="btn">
             Spolupráce s
-          </a>
+          </Link>
         </div>
       </section>
 
