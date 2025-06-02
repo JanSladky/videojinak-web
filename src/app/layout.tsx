@@ -4,7 +4,7 @@ import ClientLayout from './ClientLayout';
 
 export const metadata = {
   title: 'Videojinak.cz',
-  description: 'Promo, klipy, svatby, video jinak.',
+  description: 'Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak jedině super.',
    icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
