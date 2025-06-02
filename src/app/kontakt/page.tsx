@@ -2,9 +2,12 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
+import Link from "next/link";
 
 export default function KontaktPage() {
-  const [form, setForm] = useState({
+  const [activeTab, setActiveTab] = useState<"svatebni" | "firemni">("svatebni");
+
+  const [formWedding, setFormWedding] = useState({
     name: "",
     email: "",
     phone: "",
@@ -13,15 +16,30 @@ export default function KontaktPage() {
     message: "",
   });
 
+  const [formCompany, setFormCompany] = useState({
+    company_name: "",
+    email: "",
+    phone: "",
+    event_date: "",
+    message: "",
+  });
+
   const [status, setStatus] = useState<string | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, isCompany = false) => {
+    const { name, value } = e.target;
+    if (isCompany) {
+      setFormCompany((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setFormWedding((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("⏳ Odesílání...");
+
+    const form = activeTab === "svatebni" ? formWedding : formCompany;
 
     try {
       const res = await fetch("/api/contact", {
@@ -38,14 +56,24 @@ export default function KontaktPage() {
       }
 
       setStatus("✅ Zpráva byla úspěšně odeslána.");
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        wedding_date: "",
-        source: "",
-        message: "",
-      });
+      if (activeTab === "svatebni") {
+        setFormWedding({
+          name: "",
+          email: "",
+          phone: "",
+          wedding_date: "",
+          source: "",
+          message: "",
+        });
+      } else {
+        setFormCompany({
+          company_name: "",
+          email: "",
+          phone: "",
+          event_date: "",
+          message: "",
+        });
+      }
     } catch (err) {
       console.error("❌ Výjimka:", err);
       setStatus("❌ Nepodařilo se odeslat zprávu.");
@@ -55,40 +83,68 @@ export default function KontaktPage() {
   return (
     <div className="px-6 py-12 max-w-4xl mx-auto text-center space-y-6">
       <h1 className="text-3xl font-bold mb-4">Kontakt</h1>
-      <div className="mt-10 flex justify-center gap-6 text-2xl text-gray-700">
-        <a href="https://www.instagram.com/tvoje_instagram" target="_blank" rel="noopener noreferrer">
-          <FaInstagram />
-        </a>
-        <a href="https://www.facebook.com/tvoje_facebook" target="_blank" rel="noopener noreferrer">
-          <FaFacebook />
-        </a>
-        <a href="https://www.youtube.com/@tvoje_youtube" target="_blank" rel="noopener noreferrer">
-          <FaYoutube />
-        </a>
+
+      {/* Tabs */}
+      <div className="flex justify-center mb-6 space-x-4">
+        <button
+          className={`px-4 py-2 font-semibold ${
+            activeTab === "svatebni" ? "border-b-2 border-black" : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("svatebni")}
+        >
+          Svatební poptávka
+        </button>
+        <button
+          className={`px-4 py-2 font-semibold ${
+            activeTab === "firemni" ? "border-b-2 border-black" : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("firemni")}
+        >
+          Firemní poptávka
+        </button>
       </div>
 
+      {/* Social Icons */}
+      <div className="mt-4 flex justify-center gap-6 text-2xl text-gray-700">
+        <Link href="https://www.instagram.com/tvoje_instagram" target="_blank" rel="noopener noreferrer">
+          <FaInstagram />
+        </Link>
+        <Link href="https://www.facebook.com/tvoje_facebook" target="_blank" rel="noopener noreferrer">
+          <FaFacebook />
+        </Link>
+        <Link href="https://www.youtube.com/@tvoje_youtube" target="_blank" rel="noopener noreferrer">
+          <FaYoutube />
+        </Link>
+      </div>
+
+      {/* Formuláře */}
       <form onSubmit={handleSubmit} className="mt-8 space-y-4 max-w-md mx-auto text-left">
-        <input type="text" name="name" placeholder="Vaše jméno" value={form.name} onChange={handleChange} required className="w-full p-3 border rounded" />
-        <input type="email" name="email" placeholder="Váš e-mail" value={form.email} onChange={handleChange} required className="w-full p-3 border rounded" />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Telefonní číslo"
-          value={form.phone}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded"
-        />
-        <input type="date" name="wedding_date" value={form.wedding_date} onChange={handleChange} required className="w-full p-3 border rounded" />
-        <select name="source" value={form.source} onChange={handleChange} required className="w-full p-3 border rounded">
-          <option value="">Odkud jste se o nás dozvěděli?</option>
-          <option value="Facebook">Facebook</option>
-          <option value="Instagram">Instagram</option>
-          <option value="Doporučení">Doporučení</option>
-          <option value="Google">Google</option>
-          <option value="Jiné">Jiné</option>
-        </select>
-        <textarea name="message" rows={5} placeholder="Poznámka" value={form.message} onChange={handleChange} className="w-full p-3 border rounded" />
+        {activeTab === "svatebni" ? (
+          <>
+            <input type="text" name="name" placeholder="Vaše jméno" value={formWedding.name} onChange={handleChange} required className="w-full p-3 border rounded" />
+            <input type="email" name="email" placeholder="Váš e-mail" value={formWedding.email} onChange={handleChange} required className="w-full p-3 border rounded" />
+            <input type="tel" name="phone" placeholder="Telefonní číslo" value={formWedding.phone} onChange={handleChange} required className="w-full p-3 border rounded" />
+            <input type="date" name="wedding_date" value={formWedding.wedding_date} onChange={handleChange} required className="w-full p-3 border rounded" />
+            <select name="source" value={formWedding.source} onChange={handleChange} required className="w-full p-3 border rounded">
+              <option value="">Odkud jste se o nás dozvěděli?</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Doporučení">Doporučení</option>
+              <option value="Google">Google</option>
+              <option value="Jiné">Jiné</option>
+            </select>
+            <textarea name="message" rows={5} placeholder="Poznámka" value={formWedding.message} onChange={handleChange} className="w-full p-3 border rounded" />
+          </>
+        ) : (
+          <>
+            <input type="text" name="company_name" placeholder="Název firmy" value={formCompany.company_name} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
+            <input type="email" name="email" placeholder="E-mail" value={formCompany.email} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
+            <input type="tel" name="phone" placeholder="Telefon" value={formCompany.phone} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
+            <input type="date" name="event_date" value={formCompany.event_date} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
+            <textarea name="message" rows={5} placeholder="Popis akce" value={formCompany.message} onChange={(e) => handleChange(e, true)} className="w-full p-3 border rounded" />
+          </>
+        )}
+
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
           Odeslat zprávu
         </button>
