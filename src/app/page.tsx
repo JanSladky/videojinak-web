@@ -59,7 +59,7 @@ export default function HomePage() {
       } else {
         slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
       }
-    }, 7000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [autoSlide]);
