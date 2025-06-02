@@ -2,197 +2,82 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const references = [
-  {
-    id: 1,
-    text:
-      "Naprosto bezkonkurenční! Měli jsme na svatbě víc jak půlku hostů z Irska a ti dodnes mluví o nejlepší svatbě a to především právě diky klukům z Videojinak!",
-    sign: "Nelli Přibáňová (svatba)",
-  },
-  {
-    id: 2,
-    text: "Je na 100% jasný, že s takovým profíkem budeme letos znova točit a s nesmírnou chutí!!! Lukáš je super profesionál na nápady a kameru.",
-    sign: "Ondřej Demut (promo automobilových závodů)",
-  },
-  {
-    id: 3,
-    text: "Termín svatby jsme vybírali dle možnosti natáčení, protože svatbu bez videa od nich nechcete :) Doporučuju všem!",
-    sign: "Nella Šolcová (svatba)",
-  },
-  {
-    id: 4,
-    text: "Šimi nám točil v létě svatbičku, a taky točil svatbičku ségře, a kámošce, a ... a to vlastně asi vypovídá o všem  Dáváme hodnocení 1853 ze 100!",
-    sign: "Áňa Vaníčková (svatba)",
-  },
-  {
-    id: 5,
-    text: "Kluci nám natáčeli firemní promo video a výsledek, rychlost a osobní přístup byl na top úrovni. Do budoucna cokoliv už jen s VIDEOJINAK.",
-    sign: "Lukáš Málek (promo na restauraci)",
-  },
-  {
-    id: 6,
-    text: "Skvělý výsledný videa, natáčení je ohromná sranda. Kluci z Videojinak jsou fakt boží a asi se rozvedu jen abych je mohl znovu pozvat na svatbu ",
-    sign: "Michal Holzknecht (svatba)",
-  },
-  {
-    id: 7,
-    text: "Pokud si myslíte, že Videojinak budeme neustále doporučovat, tak se mýlíte. Nebudeme. Protože pak by neměli čas na nás ",
-    sign: "Tomáš Krs (promospot pro KRS Auto - Mercedez)",
-  },
-  {
-    id: 8,
-    text: "Kluci zapadli mezi naší rodinu - jako by tam prostě patřili. Neměnila bych a všem můžu velmi doporučit. A jim znova děkuji ",
-    sign: "Petra Honzíková (svatba)",
-  },
-  {
-    id: 9,
-    text:
-      "Videa jsou netradiční, zábavná, vtipná a tak jak vypadají videa, tak ve stejném modu probíhá i natáčení. Prostě v dokonalé pohodě protkané neustálým humorem!",
-    sign: "Gabriela Kotoucova (svatba)",
-  },
-  {
-    id: 10,
-    text:
-      "Kluci mají skvělý cit vytvořit něco, co vyvolá v člověku emoci a zanechá stopu. Dělali jsme několik projektů a vždy skvěle a mega profesionálně odvedená práce. Za mě 100 bludišťáků ",
-    sign: "Extreme Hobby (akční promo spoty OKTAGON)",
-  },
-  {
-    id: 11,
-    text:
-      "Videa vytvořená Lukášem jsou hravá, vtipná, profesionální, zároveň vždy protkaná osobním přístupem a originalitou jemu vlastní! Proto naše profi spolupráce přerostla v přátelství ",
-    sign: "Dagmar Pavlová (COTY - kosmetická videa)",
-  },
-  {
-    id: 12,
-    text: "Nejednomu zaměstnanci ukápla slza dojetím po shlédnutí promo videa, přestože během natáčení nás bolela břicha od smíchu...",
-    sign: "Jan Podsednik (Bohemia Hop – video o chmelu)",
-  },
-  {
-    id: 13,
-    text: "S každým rokem zvyšují svoji technickou kvalitu a ani po všech těch letech jim nechybí elán a dobré nápady.",
-    sign: "Marek Neklan (režisér, spolunatáčení filmečků)",
-  },
-  {
-    id: 14,
-    text:
-      "Vždy vyrazí dech. Profesionální a originální práce s lidským přístupem. Vždy vše s úsměvem a neskutečnou grácií. Doporučuji všemi deseti. Stojí to za to.",
-    sign: "Martina Patočková (svatba)",
-  },
-  {
-    id: 15,
-    text:
-      "Dodnes i díky videu k nám v létě přijíždí spousta nadšených mladých jezdkyň. Lukáš prostě vykouzlil neskutečný výsledek! Proto se taky chystáme na další kousek ",
-    sign: "Eva Podrabská (dokument o koních)",
-  },
-  {
-    id: 16,
-    text: "Opravdu velký kouzelník s kamerou a videem, který má v sobě spoustu nápadů, kreativity a zkušeností.",
-    sign: "Lukáš Budai (moderátor)",
-  },
-  {
-    id: 17,
-    text: "Kluci byli naprosto profesionální, milí a natáčení s nimi byla jedna obrovská legrace!",
-    sign: "Michaela Dinhová (kaskadérka, akční film BLBEJ DEN)",
-  },
-  {
-    id: 18,
-    text:
-      "Jako marketingový manažer nadnárodní značky dekorativní kosmetiky mohu spolupráci s Videojinak jen doporučit. Jejich přístup, produkt, služby a vybavení jsou na profesionální úrovni.",
-    sign: "Kristyna Dierstein (COTY - kosmetická videa)",
-  },
-  {
-    id: 19,
-    text:
-      "Šaty použijete jednou, květiny zvadnou, hostina se sní... ale tuhle úžasnou vzpomínku si budete pouštět celý život... a pokud nechcete časem u sledování vašeho svatebního videa umřít nudou, objednejte si VIDEOJINAK!!",
-    sign: "Tereza Relichová (svatba)",
-  },
-  {
-    id: 20,
-    text:
-      "V životě nikdy nebudu litovat toho, že jsem se rozhodla na naši svatbu pro kluky z Videojinak, byť jsem zprvu váhala, jelikož jsou z opačného konce republiky. Bylo to ale moje nejlepší životní rozhodnutí ",
-    sign: "Katerina Miczkova (svatba)",
-  },
-  {
-    id: 21,
-    text: "Tak pozor, tohle nejsou obyčejná svatební videa. Lukáš je strašně šikovnej a svojí bezvadnou náladou Vás dokáže uvolnit a dostat z Vás to nejlepší.",
-    sign: "Kristina Bímová (svatba)",
-  },
-];
-
-const companies = [
-  "Rimmel",
-  "Škoda",
-  "Nescafé",
-  "Radio Frekvence 1",
-  "Makro",
-  "Fany Gastro",
-  "Bidvest",
-  "COTY",
-  "Timelab",
-  "Sally Hansen",
-  "Astor",
-  "Mary Key",
-  "Narex",
-  "Oktagon",
-  "Gestamp",
-  "Cushman & Wakefield",
-  "Remax G8",
-  "Tessuto",
-  "Xandor",
-  "BOS",
-  "Bohemia Hop",
-  "Nemovito",
-  "Extreme Hobby",
-  "Ruda z Ostravy",
-  "Česká Federace Aikido",
-  "Stavebniny VHV",
-  "Eurosupport",
-  "Černý Žaludi",
-  "Wheelabrator",
-  "Biopreparáty",
-  "Reinders MMA",
-  "Cavalier",
-  "Město Žatec",
-];
-
 export default function HomePage() {
   const desktopRef = useRef<HTMLVideoElement | null>(null);
   const mobileRef = useRef<HTMLVideoElement | null>(null);
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const [autoSlide, setAutoSlide] = useState(true);
+  const autoSlideTimer = useRef<NodeJS.Timeout | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const stopAutoSlide = () => setAutoSlide(false);
-  const resumeAutoSlide = () => setTimeout(() => setAutoSlide(true), 8000);
+  const stopAutoSlide = () => {
+    setAutoSlide(false);
+    if (autoSlideTimer.current) clearTimeout(autoSlideTimer.current);
+  };
+
+  const resumeAutoSlide = () => {
+    autoSlideTimer.current = setTimeout(() => setAutoSlide(true), 8000);
+  };
 
   useEffect(() => {
-    const setViewportHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+    window.addEventListener("resize", () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
-    };
-    setViewportHeight();
-    window.addEventListener("resize", setViewportHeight);
-    return () => window.removeEventListener("resize", setViewportHeight);
+    });
   }, []);
 
   useEffect(() => {
     desktopRef.current?.play().catch(() => {});
     mobileRef.current?.play().catch(() => {});
+
+    // Zarovnání první recenze doprostřed
+    const slider = sliderRef.current;
+    if (slider) {
+      const card = slider.querySelector(".review-card") as HTMLElement;
+      if (card) {
+        const scrollTo = card.offsetLeft - (slider.offsetWidth - card.offsetWidth) / 2;
+        slider.scrollTo({ left: scrollTo, behavior: "auto" });
+      }
+    }
   }, []);
 
   useEffect(() => {
     if (!sliderRef.current || !autoSlide) return;
+
     const slider = sliderRef.current;
-    const scrollAmount = slider.clientWidth;
+    const card = slider.querySelector(".review-card") as HTMLElement;
+    if (!card) return;
+
+    const scrollAmount = card.offsetWidth + 16;
+
     const interval = setInterval(() => {
-      slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
-      if (slider.scrollLeft + scrollAmount >= slider.scrollWidth) {
-        setTimeout(() => {
-          slider.scrollTo({ left: 0, behavior: "smooth" });
-        }, 1000);
+      const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+      if (slider.scrollLeft + scrollAmount >= maxScrollLeft) {
+        slider.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
       }
-    }, 6000);
+    }, 7000);
+
     return () => clearInterval(interval);
   }, [autoSlide]);
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const handleScroll = () => {
+      const card = slider.querySelector(".review-card") as HTMLElement;
+      if (!card) return;
+      const index = Math.round(slider.scrollLeft / (card.offsetWidth + 16));
+      setActiveIndex(index);
+    };
+
+    slider.addEventListener("scroll", handleScroll);
+    return () => slider.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -240,6 +125,160 @@ export default function HomePage() {
     };
   }, []);
 
+  const references = [
+    {
+      id: 1,
+      text:
+        "Naprosto bezkonkurenční! Měli jsme na svatbě víc jak půlku hostů z Irska a ti dodnes mluví o nejlepší svatbě a to především právě diky klukům z Videojinak!",
+      sign: "Nelli Přibáňová (svatba)",
+    },
+    {
+      id: 2,
+      text: "Je na 100% jasný, že s takovým profíkem budeme letos znova točit a s nesmírnou chutí!!! Lukáš je super profesionál na nápady a kameru.",
+      sign: "Ondřej Demut (promo automobilových závodů)",
+    },
+    {
+      id: 3,
+      text: "Termín svatby jsme vybírali dle možnosti natáčení, protože svatbu bez videa od nich nechcete :) Doporučuju všem!",
+      sign: "Nella Šolcová (svatba)",
+    },
+    {
+      id: 4,
+      text: "Šimi nám točil v létě svatbičku, a taky točil svatbičku ségře, a kámošce, a ... a to vlastně asi vypovídá o všem  Dáváme hodnocení 1853 ze 100!",
+      sign: "Áňa Vaníčková (svatba)",
+    },
+    {
+      id: 5,
+      text: "Kluci nám natáčeli firemní promo video a výsledek, rychlost a osobní přístup byl na top úrovni. Do budoucna cokoliv už jen s VIDEOJINAK.",
+      sign: "Lukáš Málek (promo na restauraci)",
+    },
+    {
+      id: 6,
+      text: "Skvělý výsledný videa, natáčení je ohromná sranda. Kluci z Videojinak jsou fakt boží a asi se rozvedu jen abych je mohl znovu pozvat na svatbu ",
+      sign: "Michal Holzknecht (svatba)",
+    },
+    {
+      id: 7,
+      text: "Pokud si myslíte, že Videojinak budeme neustále doporučovat, tak se mýlíte. Nebudeme. Protože pak by neměli čas na nás ",
+      sign: "Tomáš Krs (promospot pro KRS Auto - Mercedez)",
+    },
+    {
+      id: 8,
+      text: "Kluci zapadli mezi naší rodinu - jako by tam prostě patřili. Neměnila bych a všem můžu velmi doporučit. A jim znova děkuji ",
+      sign: "Petra Honzíková (svatba)",
+    },
+    {
+      id: 9,
+      text:
+        "Videa jsou netradiční, zábavná, vtipná a tak jak vypadají videa, tak ve stejném modu probíhá i natáčení. Prostě v dokonalé pohodě protkané neustálým humorem!",
+      sign: "Gabriela Kotoucova (svatba)",
+    },
+    {
+      id: 10,
+      text:
+        "Kluci mají skvělý cit vytvořit něco, co vyvolá v člověku emoci a zanechá stopu. Dělali jsme několik projektů a vždy skvěle a mega profesionálně odvedená práce. Za mě 100 bludišťáků ",
+      sign: "Extreme Hobby (akční promo spoty OKTAGON)",
+    },
+    {
+      id: 11,
+      text:
+        "Videa vytvořená Lukášem jsou hravá, vtipná, profesionální, zároveň vždy protkaná osobním přístupem a originalitou jemu vlastní! Proto naše profi spolupráce přerostla v přátelství ",
+      sign: "Dagmar Pavlová (COTY - kosmetická videa)",
+    },
+    {
+      id: 12,
+      text: "Nejednomu zaměstnanci ukápla slza dojetím po shlédnutí promo videa, přestože během natáčení nás bolela břicha od smíchu...",
+      sign: "Jan Podsednik (Bohemia Hop – video o chmelu)",
+    },
+    {
+      id: 13,
+      text: "S každým rokem zvyšují svoji technickou kvalitu a ani po všech těch letech jim nechybí elán a dobré nápady.",
+      sign: "Marek Neklan (režisér, spolunatáčení filmečků)",
+    },
+    {
+      id: 14,
+      text:
+        "Vždy vyrazí dech. Profesionální a originální práce s lidským přístupem. Vždy vše s úsměvem a neskutečnou grácií. Doporučuji všemi deseti. Stojí to za to.",
+      sign: "Martina Patočková (svatba)",
+    },
+    {
+      id: 15,
+      text:
+        "Dodnes i díky videu k nám v létě přijíždí spousta nadšených mladých jezdkyň. Lukáš prostě vykouzlil neskutečný výsledek! Proto se taky chystáme na další kousek ",
+      sign: "Eva Podrabská (dokument o koních)",
+    },
+    {
+      id: 16,
+      text: "Opravdu velký kouzelník s kamerou a videem, který má v sobě spoustu nápadů, kreativity a zkušeností.",
+      sign: "Lukáš Budai (moderátor)",
+    },
+    {
+      id: 17,
+      text: "Kluci byli naprosto profesionální, milí a natáčení s nimi byla jedna obrovská legrace!",
+      sign: "Michaela Dinhová (kaskadérka, akční film BLBEJ DEN)",
+    },
+    {
+      id: 18,
+      text:
+        "Jako marketingový manažer nadnárodní značky dekorativní kosmetiky mohu spolupráci s Videojinak jen doporučit. Jejich přístup, produkt, služby a vybavení jsou na profesionální úrovni.",
+      sign: "Kristyna Dierstein (COTY - kosmetická videa)",
+    },
+    {
+      id: 19,
+      text:
+        "Šaty použijete jednou, květiny zvadnou, hostina se sní... ale tuhle úžasnou vzpomínku si budete pouštět celý život... a pokud nechcete časem u sledování vašeho svatebního videa umřít nudou, objednejte si VIDEOJINAK!!",
+      sign: "Tereza Relichová (svatba)",
+    },
+    {
+      id: 20,
+      text:
+        "V životě nikdy nebudu litovat toho, že jsem se rozhodla na naši svatbu pro kluky z Videojinak, byť jsem zprvu váhala, jelikož jsou z opačného konce republiky. Bylo to ale moje nejlepší životní rozhodnutí ",
+      sign: "Katerina Miczkova (svatba)",
+    },
+    {
+      id: 21,
+      text:
+        "Tak pozor, tohle nejsou obyčejná svatební videa. Lukáš je strašně šikovnej a svojí bezvadnou náladou Vás dokáže uvolnit a dostat z Vás to nejlepší.",
+      sign: "Kristina Bímová (svatba)",
+    },
+  ];
+
+  const companies = [
+    "Rimmel",
+    "Škoda",
+    "Nescafé",
+    "Radio Frekvence 1",
+    "Makro",
+    "Fany Gastro",
+    "Bidvest",
+    "COTY",
+    "Timelab",
+    "Sally Hansen",
+    "Astor",
+    "Mary Key",
+    "Narex",
+    "Oktagon",
+    "Gestamp",
+    "Cushman & Wakefield",
+    "Remax G8",
+    "Tessuto",
+    "Xandor",
+    "BOS",
+    "Bohemia Hop",
+    "Nemovito",
+    "Extreme Hobby",
+    "Ruda z Ostravy",
+    "Česká Federace Aikido",
+    "Stavebniny VHV",
+    "Eurosupport",
+    "Černý Žaludi",
+    "Wheelabrator",
+    "Biopreparáty",
+    "Reinders MMA",
+    "Cavalier",
+    "Město Žatec",
+  ];
+
   return (
     <>
       {/* VIDEO SEKCE */}
@@ -286,7 +325,7 @@ export default function HomePage() {
         <h2 className="text-3xl font-bold mb-6">Recenze</h2>
         <div
           ref={sliderRef}
-          className="flex gap-4 overflow-x-auto px-1 scrollbar-hide cursor-grab snap-x snap-mandatory scroll-smooth"
+          className="flex gap-4 overflow-x-auto px-1 scrollbar-hide select-none cursor-grab snap-x snap-mandatory scroll-smooth max-w-[100%] sm:max-w-[1500px] mx-auto"
           style={{ WebkitOverflowScrolling: "touch" }}
           onMouseEnter={stopAutoSlide}
           onMouseLeave={resumeAutoSlide}
@@ -294,13 +333,19 @@ export default function HomePage() {
           {references.map((ref) => (
             <div
               key={ref.id}
-              className="snap-center min-w-[90%] sm:min-w-[500px] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[200px] px-4"
+              className="review-card snap-center w-[90%] sm:w-[50%] lg:w-[33.33%] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[180px] sm:h-[220px] lg:h-[250px] px-4"
             >
               <div className="flex flex-col justify-center items-center w-full max-w-xl overflow-hidden">
-                <p className="text-base sm:text-lg italic leading-relaxed mb-4 break-words">{`"${ref.text}"`}</p>
-                <p className="font-semibold text-gray-600 text-sm sm:text-base">{ref.sign}</p>
+                <p className="text-sm sm:text-base md:text-lg italic leading-relaxed mb-4 break-words">{`"${ref.text}"`}</p>
+                <p className="font-semibold text-gray-600 text-sm sm-text:base md-text-lg">{ref.sign}</p>
               </div>
             </div>
+          ))}
+        </div>
+
+        <div className="flex justify-center mt-4 gap-2">
+          {references.map((_, i) => (
+            <div key={i} className={`w-2 h-2 rounded-full ${i === activeIndex ? "bg-black" : "bg-gray-400"} transition-all`} />
           ))}
         </div>
         <div className="mt-6">
