@@ -6,8 +6,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: "Pouze POST je povolen." });
   }
 
-  const { name, email, phone, wedding_date, source, message } = req.body;
-
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),
@@ -19,18 +17,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   try {
+    const isCompany = !!req.body.company_name;
+
+    const subject = isCompany
+      ? "Nová poptávka z firemního formuláře"
+      : "Nová poptávka ze svatebního formuláře";
+
+    const text = isCompany
+      ? `
+        Název firmy: ${req.body.company_name}
+        E-mail: ${req.body.email}
+        Telefon: ${req.body.phone}
+        Datum akce: ${req.body.event_date}
+        Zpráva: ${req.body.message}
+      `
+      : `
+        Jméno: ${req.body.name}
+        E-mail: ${req.body.email}
+        Telefon: ${req.body.phone}
+        Datum svatby: ${req.body.wedding_date}
+        Zdroj: ${req.body.source}
+        Zpráva: ${req.body.message}
+      `;
+
     await transporter.sendMail({
-      from: `"${name}" <${email}>`,
+      from: `"${isCompany ? req.body.company_name : req.body.name}" <${req.body.email}>`,
       to: process.env.EMAIL_TO,
-      subject: "Nová poptávka ze svatebního formuláře",
-      text: `
-        Jméno: ${name}
-        E-mail: ${email}
-        Telefon: ${phone}
-        Datum svatby: ${wedding_date}
-        Zdroj: ${source}
-        Zpráva: ${message}
-      `,
+      subject,
+      text,
     });
 
     return res.status(200).json({ message: "Úspěšně odesláno" });

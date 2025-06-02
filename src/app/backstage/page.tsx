@@ -5,6 +5,7 @@ import Lightbox from 'yet-another-react-lightbox';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
+import Image from 'next/image';
 
 
 const imageCount = 60;
@@ -34,7 +35,7 @@ export default function BackstagePage() {
             onClick={() => setIndex(i)}
             className="aspect-w-4 aspect-h-3 overflow-hidden rounded shadow hover:scale-105 transition-transform"
           >
-            <img
+            <Image
               src={img.src}
               alt={img.alt}
               className="w-full h-full object-cover"

@@ -125,6 +125,7 @@ export default function KontaktPage() {
             <input type="text" name="name" placeholder="Vaše jméno" value={formWedding.name} onChange={handleChange} required className="w-full p-3 border rounded" />
             <input type="email" name="email" placeholder="Váš e-mail" value={formWedding.email} onChange={handleChange} required className="w-full p-3 border rounded" />
             <input type="tel" name="phone" placeholder="Telefonní číslo" value={formWedding.phone} onChange={handleChange} required className="w-full p-3 border rounded" />
+            <span className="block mb-1 font-medium">Datum svatby</span>
             <input type="date" name="wedding_date" value={formWedding.wedding_date} onChange={handleChange} required className="w-full p-3 border rounded" />
             <select name="source" value={formWedding.source} onChange={handleChange} required className="w-full p-3 border rounded">
               <option value="">Odkud jste se o nás dozvěděli?</option>
@@ -141,6 +142,7 @@ export default function KontaktPage() {
             <input type="text" name="company_name" placeholder="Název firmy" value={formCompany.company_name} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
             <input type="email" name="email" placeholder="E-mail" value={formCompany.email} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
             <input type="tel" name="phone" placeholder="Telefon" value={formCompany.phone} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
+             <span className="block mb-1 font-medium">Datum akce</span>
             <input type="date" name="event_date" value={formCompany.event_date} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded" />
             <textarea name="message" rows={5} placeholder="Popis akce" value={formCompany.message} onChange={(e) => handleChange(e, true)} className="w-full p-3 border rounded" />
           </>
