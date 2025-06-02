@@ -107,13 +107,13 @@ export default function KontaktPage() {
 
       {/* Social Icons */}
       <div className="mt-4 flex justify-center gap-6 text-2xl text-gray-700">
-        <Link href="https://www.instagram.com/tvoje_instagram" target="_blank" rel="noopener noreferrer">
+        <Link href="https://www.instagram.com/videojinak_lukas_simandl/" target="_blank" rel="noopener noreferrer">
           <FaInstagram />
         </Link>
-        <Link href="https://www.facebook.com/tvoje_facebook" target="_blank" rel="noopener noreferrer">
+        <Link href="https://www.facebook.com/Videojinak" target="_blank" rel="noopener noreferrer">
           <FaFacebook />
         </Link>
-        <Link href="https://www.youtube.com/@tvoje_youtube" target="_blank" rel="noopener noreferrer">
+        <Link href="https://www.youtube.com/@lukassvatby" target="_blank" rel="noopener noreferrer">
           <FaYoutube />
         </Link>
       </div>
