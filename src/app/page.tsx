@@ -32,15 +32,26 @@ export default function HomePage() {
     desktopRef.current?.play().catch(() => {});
     mobileRef.current?.play().catch(() => {});
 
-    // Zarovnání první recenze doprostřed
     const slider = sliderRef.current;
-    if (slider) {
-      const card = slider.querySelector(".review-card") as HTMLElement;
-      if (card) {
-        const scrollTo = card.offsetLeft - (slider.offsetWidth - card.offsetWidth) / 2;
-        slider.scrollTo({ left: scrollTo, behavior: "auto" });
-      }
-    }
+    if (!slider) return;
+
+    const firstCard = slider.querySelector(".review-card") as HTMLElement;
+    if (!firstCard) return;
+
+    // Získání šířky gapu mezi kartami
+    const sliderStyles = window.getComputedStyle(slider);
+    const gap = parseInt(sliderStyles.columnGap || sliderStyles.gap || "0", 10);
+    const paddingLeft = parseInt(sliderStyles.paddingLeft || "0", 10);
+    const cardWidth = firstCard.offsetWidth;
+    const sliderWidth = slider.offsetWidth;
+
+    // Vzorec pro zarovnání na střed (přesný)
+    const scrollTo = firstCard.offsetLeft - paddingLeft - (sliderWidth - cardWidth) / 2 + gap / 2;
+
+    // Zajistí scroll po renderu
+    requestAnimationFrame(() => {
+      slider.scrollTo({ left: scrollTo, behavior: "auto" });
+    });
   }, []);
 
   useEffect(() => {
@@ -325,19 +336,21 @@ export default function HomePage() {
         <h2 className="text-3xl font-bold mb-6">Recenze</h2>
         <div
           ref={sliderRef}
-          className="flex gap-4 overflow-x-auto px-1 scrollbar-hide select-none cursor-grab snap-x snap-mandatory scroll-smooth max-w-[100%] sm:max-w-[1500px] mx-auto"
-          style={{ WebkitOverflowScrolling: "touch" }}
+          className="flex gap-4 overflow-x-auto px-4 scrollbar-hide select-none cursor-grab snap-x snap-mandatory scroll-smooth"
           onMouseEnter={stopAutoSlide}
           onMouseLeave={resumeAutoSlide}
         >
+          {/* PŘIDANÁ ghost karta */}
+          <div className="w-[90%] sm:w-[50%] lg:w-[33.33%] flex-shrink-0 snap-center invisible" aria-hidden="true" />
+
           {references.map((ref) => (
             <div
               key={ref.id}
-              className="review-card snap-center w-[90%] sm:w-[50%] lg:w-[33.33%] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[180px] sm:h-[220px] lg:h-[250px] px-4"
+              className="review-card snap-center w-[90%] sm:w-[50%] lg:w-[33.33%] max-w-full bg-white rounded-lg shadow flex-shrink-0 flex justify-center items-center text-center h-[200px] sm:h-[220px] lg:h-[250px] px-4"
             >
               <div className="flex flex-col justify-center items-center w-full max-w-xl overflow-hidden">
-                <p className="text-sm sm:text-base md:text-lg italic leading-relaxed mb-4 break-words">{`"${ref.text}"`}</p>
-                <p className="font-semibold text-gray-600 text-sm sm-text:base md-text-lg">{ref.sign}</p>
+                <p className="text-sm sm:text-base italic leading-relaxed mb-4 break-words">{`"${ref.text}"`}</p>
+                <p className="font-semibold text-gray-600 text-sm sm:text-base">{ref.sign}</p>
               </div>
             </div>
           ))}
