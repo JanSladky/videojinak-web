@@ -8,7 +8,7 @@ const configuration = {
   path: "/",
   appName: "videojinak.cz",
   appShortName: "Videojinak",
-  appDescription: "Natáčení promo videí, klipů, svateb, videojinak",
+  appDescription: "Specializujeme se na promo, klipy, komerční i svatební videa. Nejraději děláme akčnější videa, a když do nich můžeme promítnout i srandu, pak jedině super.",
   developerName: "Jan Sladký",
   developerURL: "https://www.jansladky.eu",
   icons: {
