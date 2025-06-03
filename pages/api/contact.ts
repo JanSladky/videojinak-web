@@ -30,17 +30,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         Telefon: ${req.body.phone}
         Datum akce: ${req.body.event_date}
         Místo konání akce: ${req.body.place}
-        Zdroj: ${req.body.source}
-        Zpráva: ${req.body.message}
+        Odkud se o nás dozvěděli: ${req.body.source}
+        Doplňující informace: ${req.body.message}
       `
       : `
         Jméno ženicha a nevěsty: ${req.body.name}
         E-mail: ${req.body.email}
         Telefon: ${req.body.phone}
         Datum svatby: ${req.body.wedding_date}
-         Místo konání svatby: ${req.body.place}
-        Zdroj: ${req.body.source}
-        Zpráva: ${req.body.message}
+        Místo konání svatby: ${req.body.place}
+        Odkud se o nás dozvěděli: ${req.body.source}
+        Doplňující informace: ${req.body.message}
       `;
 
     await transporter.sendMail({
