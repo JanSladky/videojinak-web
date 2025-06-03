@@ -1,18 +1,22 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, useRef, FormEvent } from "react";
+import type { ElementRef } from "react";
+
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 
 export default function KontaktPage() {
   const [activeTab, setActiveTab] = useState<"svatebni" | "firemni">("svatebni");
+  const recaptchaRef = useRef<InstanceType<typeof ReCAPTCHA>>(null);
 
   const [formWedding, setFormWedding] = useState({
     name: "",
     email: "",
     phone: "",
     wedding_date: "",
+    place: "",
     source: "",
     message: "",
   });
@@ -22,6 +26,7 @@ export default function KontaktPage() {
     email: "",
     phone: "",
     event_date: "",
+    place: "",
     source: "",
     message: "",
   });
@@ -64,12 +69,15 @@ export default function KontaktPage() {
       }
 
       setStatus("✅ Zpráva byla úspěšně odeslána.");
+      recaptchaRef.current?.reset();
+      setRecaptchaToken(null);
       if (activeTab === "svatebni") {
         setFormWedding({
           name: "",
           email: "",
           phone: "",
           wedding_date: "",
+          place: "",
           source: "",
           message: "",
         });
@@ -79,6 +87,7 @@ export default function KontaktPage() {
           email: "",
           phone: "",
           event_date: "",
+          place: "",
           source: "",
           message: "",
         });
@@ -165,6 +174,14 @@ export default function KontaktPage() {
               required
               className="w-full p-3 border rounded"
             />
+            <input
+              type="text"
+              name="place"
+              placeholder="Místo konání svatby"
+              value={formWedding.place}
+              onChange={handleChange}
+              className="w-full p-3 border rounded"
+            />
             <select name="source" value={formWedding.source} onChange={handleChange} required className="w-full p-3 border rounded">
               <option value="">Odkud jste se o nás dozvěděli?</option>
               <option value="Facebook">Facebook</option>
@@ -224,7 +241,15 @@ export default function KontaktPage() {
               required
               className="w-full p-3 border rounded"
             />
-            <select name="source" value={formCompany.source} onChange={handleChange} required className="w-full p-3 border rounded">
+            <input
+              type="text"
+              name="place"
+              placeholder="Místo konání akce"
+              value={formCompany.place}
+              onChange={(e) => handleChange(e, true)}
+              className="w-full p-3 border rounded"
+            />
+            <select name="source" value={formCompany.source} onChange={(e) => handleChange(e, true)} required className="w-full p-3 border rounded">
               <option value="">Odkud jste se o nás dozvěděli?</option>
               <option value="Facebook">Facebook</option>
               <option value="Instagram">Instagram</option>
@@ -243,7 +268,12 @@ export default function KontaktPage() {
           </>
         )}
 
-        <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} onChange={(token: string | null) => setRecaptchaToken(token)} className="mx-auto" />
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+          onChange={(token: string | null) => setRecaptchaToken(token)}
+          className="mx-auto"
+        />
 
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
           Odeslat zprávu

@@ -29,14 +29,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         E-mail: ${req.body.email}
         Telefon: ${req.body.phone}
         Datum akce: ${req.body.event_date}
+        Místo konání akce: ${req.body.place}
         Zdroj: ${req.body.source}
         Zpráva: ${req.body.message}
       `
       : `
-        Jméno: ${req.body.name}
+        Jméno ženicha a nevěsty: ${req.body.name}
         E-mail: ${req.body.email}
         Telefon: ${req.body.phone}
         Datum svatby: ${req.body.wedding_date}
+         Místo konání svatby: ${req.body.place}
         Zdroj: ${req.body.source}
         Zpráva: ${req.body.message}
       `;
