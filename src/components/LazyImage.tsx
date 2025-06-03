@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useState } from "react";
-import Skeleton from "./Skeleton";
 
 export function LazyImage({
   src,
@@ -28,7 +27,9 @@ export function LazyImage({
 
   return (
     <div className={`relative w-full h-full ${className}`}>
-      {!loaded && <Skeleton className="absolute inset-0 w-full h-full rounded" />}
+      {!loaded && (
+        <div className="absolute inset-0 w-full h-full rounded shimmer z-10" />
+      )}
       <Image
         src={src}
         alt={alt}

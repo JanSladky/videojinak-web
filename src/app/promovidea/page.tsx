@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import LazyIframe from "../../components/LazyIframe";
 
 const videos = [
   "https://www.youtube.com/embed/1vM6My77UMM?si=Xifn-jFpnC65BhRV",
@@ -68,17 +69,11 @@ export default function PromoVideoPage() {
       <h1 className="text-2xl font-bold">Promo & Firemní videa</h1>
 
       <p className="text-lg">
-       O Promo videjka je čím dál větší zájem. Ať už jde o prezentaci firmy, videoklip skupiny, krátký film, či prezentaci sportovního klubu. Cena se stanovuje na základě složitosti projektu.
+        O Promo videjka je čím dál větší zájem. Ať už jde o prezentaci firmy, videoklip skupiny, krátký film, či prezentaci sportovního klubu. Cena se stanovuje
+        na základě složitosti projektu.
       </p>
-        <div className="aspect-w-16 aspect-h-9 mb-6">
-        <iframe
-          src="https://www.youtube.com/embed/xBzmewPnkBE?si=Khex44VlHOFx_b_s"
-          title="Úvodní svatební klip"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="w-full h-full rounded-lg"
-        ></iframe>
-      </div>
+
+      <LazyIframe src="https://www.youtube.com/embed/xBzmewPnkBE?si=Khex44VlHOFx_b_s" title="Úvodní svatební klip" heightClassName="h-[400px]" />
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Na co se specializujeme:</h2>
@@ -94,15 +89,7 @@ export default function PromoVideoPage() {
         <h2 className="text-xl font-semibold mb-4">Ukázky promo videí</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {visibleVideos.map((src, index) => (
-            <div key={index} className="aspect-video">
-              <iframe
-                className="w-full h-full rounded-lg"
-                src={src}
-                title={`Promo video ${index + 1}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+            <LazyIframe key={index} src={src} title={`Promo video ${index + 1}`} heightClassName="aspect-video" />
           ))}
         </div>
 
