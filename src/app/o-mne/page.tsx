@@ -17,7 +17,7 @@ export default function O_MnePage() {
           do svatebních videí. A to se povedlo. Spousta klientů mi říká, že si naše natáčení totálně užili a za to jsme rádi. 😄 Mám také rád bojová umění a
           sporty, a proto je také v mé tvorbě hodně uvidíte. Ať jde o záznamy z akcí typu Oktagon, či krátké akční filmečky. Nejradši se ale směju, a tak
           tvoříme s mojí bandou spousty videí na odreagování… v naší dílně vznikl například JÚTUBER JOŽKA. 😄 „Moje práce je můj koníček“ … Kdo vlastně tohle
-          může říct? … Já určitě jo. 😄
+          může říct? … Já určitě jo 😄
         </p>
       </div>
     </div>
