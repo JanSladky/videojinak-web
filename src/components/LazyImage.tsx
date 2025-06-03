@@ -24,13 +24,9 @@ export function LazyImage({
   const [error, setError] = useState(false);
 
   if (error) {
-    return (
-      <div className={`flex items-center justify-center bg-red-100 text-red-500 text-xs font-medium rounded ${className}`}>
-        🖼️ Nelze načíst
-      </div>
-    );
+    return <div className={`flex items-center justify-center bg-red-100 text-red-500 text-xs font-medium rounded ${className}`}>🖼️ Nelze načíst</div>;
   }
-
+  const objectFitClass = objectFit === "contain" ? "object-contain" : "object-cover";
   return (
     <div className={`relative ${fill ? "w-full h-full" : ""} ${className}`}>
       {!loaded && <div className="absolute inset-0 shimmer pointer-events-none z-10" />}
@@ -43,7 +39,7 @@ export function LazyImage({
         height={!fill ? height : undefined}
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
-        className={`transition-opacity duration-500 rounded object-${objectFit} ${loaded ? "opacity-100" : "opacity-0"}`}
+        className={`transition-opacity duration-500 rounded ${objectFitClass} ${loaded ? "opacity-100" : "opacity-0"}`}
       />
     </div>
   );

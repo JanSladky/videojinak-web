@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  safelist: ["object-cover", "object-contain"],
   theme: {
     extend: {
       animation: {
