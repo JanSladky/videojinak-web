@@ -29,7 +29,7 @@ export default function BackstagePage() {
       <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-7 gap-4">
         {images.map((img, i) => (
           <button key={i} onClick={() => setIndex(i)} className="relative aspect-[4/3] overflow-hidden rounded shadow hover:scale-105 transition-transform">
-            <LazyImage src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+            <LazyImage src={img.src} alt={img.alt} objectFit="cover" className="w-full h-full object-cover" loading="lazy" />
           </button>
         ))}
       </div>

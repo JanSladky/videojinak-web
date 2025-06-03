@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import LazyIframe from "../../components/LazyIframe";
 
 const videos = [
   "https://www.youtube.com/embed/PSCz_A-dpa8?si=GGOuOphEnjmOYGdZ",
@@ -39,12 +40,12 @@ const videos = [
 ];
 
 export default function SvatebniNataceniPage() {
-  const [visibleCount, setvisibleCount] = useState(6);
-  const visibleVideos = videos.slice(0, visibleCount)
+  const [visibleCount, setVisibleCount] = useState(6);
+  const visibleVideos = videos.slice(0, visibleCount);
 
   const handleLoadMore = () => {
-    setvisibleCount((prev) => Math.min(prev + 3, videos.length))
-  }
+    setVisibleCount((prev) => Math.min(prev + 3, videos.length));
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-10">
@@ -54,15 +55,11 @@ export default function SvatebniNataceniPage() {
         tomu ukápla i nějaká ta slza.
       </p>
 
-      <div className="aspect-w-16 aspect-h-9 mb-6">
-        <iframe
-          src="https://www.youtube.com/embed/IPnMLNMQhG0?si=2lySl7nYpegNiIPI"
-          title="Úvodní svatební klip"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="w-full h-full rounded-lg"
-        ></iframe>
-      </div>
+      <LazyIframe
+        src="https://www.youtube.com/embed/IPnMLNMQhG0?si=2lySl7nYpegNiIPI"
+        title="Úvodní svatební klip"
+        heightClassName="h-[400px]"
+      />
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Co se týče variant natáčení, tak nabízíme 2:</h2>
@@ -86,22 +83,16 @@ export default function SvatebniNataceniPage() {
         <h2 className="text-xl font-semibold mb-4">Ukázky z natáčení svateb</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {visibleVideos.map((src, index) => (
-            <div key={index} className="aspect-video">
-              <iframe
-                className="w-full h-full rounded-lg"
-                src={src}
-                title={`Svatební video ${index + 1}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+            <LazyIframe key={index} src={src} title={`Svatební video ${index + 1}`} heightClassName="h-64" />
           ))}
         </div>
 
         {visibleCount < videos.length && (
-            <div className="text-center mt-6">
-                <button className="btn" onClick={handleLoadMore}>Načíst další videa</button>
-            </div>
+          <div className="text-center mt-6">
+            <button className="btn" onClick={handleLoadMore}>
+              Načíst další videa
+            </button>
+          </div>
         )}
       </div>
     </div>

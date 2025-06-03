@@ -1,16 +1,12 @@
-import Image from "next/image";
+"use client";
+
+import { LazyImage } from "../../components/LazyImage";
 
 export default function O_MnePage() {
   return (
     <div className="max-w-6xl mx-auto p-6 flex flex-col md:flex-row gap-8 items-start">
-      <div className="w-full md:w-1/2">
-        <Image
-          src="/images/about.jpg" // ✅ veřejná cesta v /public
-          alt="Lukáš Šimandl při natáčení"
-          className="rounded-lg object-cover w-full h-auto"
-          width={800}
-          height={600}
-        />
+      <div className="w-full md:w-1/2 relative h-[400px]">
+        <LazyImage src="/images/about.jpg" objectFit="contain" alt="Lukáš Šimandl při natáčení" className="rounded-lg" />
       </div>
       <div className="w-full md:w-1/2">
         <h1 className="text-2xl font-semibold mb-4">„Užívej život, ať máš v důchoďáku co vyprávět“</h1>

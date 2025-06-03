@@ -6,11 +6,13 @@ export function LazyImage({
   alt,
   className,
   loading = "lazy",
+  objectFit = "cover", // 👈 Nový prop
 }: {
   src: string;
   alt: string;
   className?: string;
   loading?: "lazy" | "eager";
+  objectFit?: "cover" | "contain";
 }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -28,7 +30,7 @@ export function LazyImage({
   return (
     <div className={`relative w-full h-full ${className}`}>
       {!loaded && (
-        <div className="absolute inset-0 w-full h-full rounded shimmer z-10" />
+        <div className="absolute inset-0 shimmer pointer-events-none z-10" />
       )}
       <Image
         src={src}
@@ -37,9 +39,9 @@ export function LazyImage({
         loading={loading}
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
-        className={`object-cover transition-opacity duration-500 rounded ${
+        className={`transition-opacity duration-500 rounded ${
           loaded ? "opacity-100" : "opacity-0"
-        }`}
+        } object-${objectFit}`}
       />
     </div>
   );
