@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, ChangeEvent, useRef, FormEvent } from "react";
-import type { ElementRef } from "react";
 
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
