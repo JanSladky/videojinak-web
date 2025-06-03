@@ -22,6 +22,7 @@ export default function KontaktPage() {
     email: "",
     phone: "",
     event_date: "",
+    source: "",
     message: "",
   });
 
@@ -78,6 +79,7 @@ export default function KontaktPage() {
           email: "",
           phone: "",
           event_date: "",
+          source: "",
           message: "",
         });
       }
@@ -90,6 +92,18 @@ export default function KontaktPage() {
   return (
     <div className="px-6 py-12 max-w-4xl mx-auto text-center space-y-6">
       <h1 className="text-3xl font-bold mb-4">Kontakt</h1>
+      {/* Social Icons */}
+      <div className="mt-4 flex justify-center gap-6 text-2xl text-gray-700">
+        <Link href="https://www.instagram.com/videojinak_lukas_simandl/" target="_blank" rel="noopener noreferrer">
+          <FaInstagram />
+        </Link>
+        <Link href="https://www.facebook.com/Videojinak" target="_blank" rel="noopener noreferrer">
+          <FaFacebook />
+        </Link>
+        <Link href="https://www.youtube.com/@lukassvatby" target="_blank" rel="noopener noreferrer">
+          <FaYoutube />
+        </Link>
+      </div>
 
       {/* Tabs */}
       <div className="flex justify-center mb-6 space-x-4">
@@ -105,19 +119,6 @@ export default function KontaktPage() {
         >
           Firemní poptávka
         </button>
-      </div>
-
-      {/* Social Icons */}
-      <div className="mt-4 flex justify-center gap-6 text-2xl text-gray-700">
-        <Link href="https://www.instagram.com/videojinak_lukas_simandl/" target="_blank" rel="noopener noreferrer">
-          <FaInstagram />
-        </Link>
-        <Link href="https://www.facebook.com/Videojinak" target="_blank" rel="noopener noreferrer">
-          <FaFacebook />
-        </Link>
-        <Link href="https://www.youtube.com/@lukassvatby" target="_blank" rel="noopener noreferrer">
-          <FaYoutube />
-        </Link>
       </div>
 
       {/* Formuláře */}
@@ -223,6 +224,14 @@ export default function KontaktPage() {
               required
               className="w-full p-3 border rounded"
             />
+            <select name="source" value={formCompany.source} onChange={handleChange} required className="w-full p-3 border rounded">
+              <option value="">Odkud jste se o nás dozvěděli?</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Doporučení">Doporučení</option>
+              <option value="Google">Google</option>
+              <option value="Jiné">Jiné</option>
+            </select>
             <textarea
               name="message"
               rows={5}

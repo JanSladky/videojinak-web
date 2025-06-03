@@ -29,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         E-mail: ${req.body.email}
         Telefon: ${req.body.phone}
         Datum akce: ${req.body.event_date}
+        Zdroj: ${req.body.source}
         Zpráva: ${req.body.message}
       `
       : `
