@@ -45,36 +45,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ? "Nová poptávka z firemního formuláře"
       : "Nová poptávka ze svatebního formuláře";
 
-    const textToAdmin = isCompany
-      ? `
-        Název firmy: ${req.body.company_name}
-        E-mail: ${req.body.email}
-        Telefon: ${req.body.phone}
-        Datum akce: ${req.body.event_date}
-        Místo konání akce: ${req.body.place}
-        Odkud se o nás dozvěděli: ${req.body.source}
-        Doplňující informace o firmě: ${req.body.message}
-      `
-      : `
-        Jméno ženicha a nevěsty: ${req.body.name}
-        E-mail: ${req.body.email}
-        Telefon: ${req.body.phone}
-        Datum svatby: ${req.body.wedding_date}
-        Místo konání svatby: ${req.body.place}
-        Odkud se o nás dozvěděli: ${req.body.source}
-        Doplňující informace o páru: ${req.body.message}
-      `;
+    const htmlContent = `
+      <div style="background-color:#e6f0fa;padding:24px;border-radius:8px;font-family:Arial,sans-serif;color:#111;">
+        <h2 style="text-align:center;color:#1a4a7f;">${isCompany ? "💼 Firemní poptávka" : "💍 Svatební poptávka"}</h2>
+        <hr style="margin:16px 0;"/>
 
-    const textToUser = isCompany
-      ? `Dobrý den,\n\nInformace dorazili v pořádku, děkujeme. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`
-      : `Dobrý den,\n\nInformace dorazili v pořádku, děkujeme. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`;
+        ${
+          isCompany
+            ? `
+          <p><strong>Název firmy:</strong><br>${req.body.company_name}</p>
+          <p><strong>E-mail:</strong><br>${req.body.email}</p>
+          <p><strong>Telefon:</strong><br>${req.body.phone}</p>
+          <p><strong>Datum akce:</strong><br>${req.body.event_date}</p>
+          <p><strong>Místo konání akce:</strong><br>${req.body.place}</p>
+          <p><strong>Odkud se o nás dozvěděli:</strong><br>${req.body.source}</p>
+          <p><strong>Doplňující informace o firmě:</strong><br>${req.body.message}</p>
+        `
+            : `
+          <p><strong>Jméno ženicha a nevěsty:</strong><br>${req.body.name}</p>
+          <p><strong>E-mail:</strong><br>${req.body.email}</p>
+          <p><strong>Telefon:</strong><br>${req.body.phone}</p>
+          <p><strong>Datum svatby:</strong><br>${req.body.wedding_date}</p>
+          <p><strong>Místo konání svatby:</strong><br>${req.body.place}</p>
+          <p><strong>Odkud se o nás dozvěděli:</strong><br>${req.body.source}</p>
+          <p><strong>Doplňující informace o páru:</strong><br>${req.body.message}</p>
+        `
+        }
 
+        <hr style="margin-top:24px;"/>
+        <p style="font-size:13px;color:#444;">
+          Tento e-mail byl odeslán z webového formuláře na <strong>VideoJinak.cz</strong>
+        </p>
+      </div>
+    `;
+
+    // E-mail pro admina
     await transporter.sendMail({
       from: `"${isCompany ? req.body.company_name : req.body.name}" <${req.body.email}>`,
       to: process.env.EMAIL_TO,
       subject: subjectToAdmin,
-      text: textToAdmin,
+      html: htmlContent,
     });
+
+    // E-mail pro uživatele
+    const textToUser = isCompany
+      ? `Dobrý den,\n\nInformace dorazily v pořádku, děkujeme. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`
+      : `Dobrý den,\n\nInformace dorazily v pořádku, děkujeme. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`;
 
     await transporter.sendMail({
       from: `"VideoJinak" <${process.env.EMAIL_USER}>`,
