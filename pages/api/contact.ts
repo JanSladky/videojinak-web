@@ -1,9 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
+// ✅ reCAPTCHA ověření
+async function verifyCaptcha(token: string): Promise<boolean> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `secret=${secret}&response=${token}`,
+  });
+  const data = await response.json();
+  return data.success;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Pouze POST je povolen." });
+  }
+
+  const { recaptchaToken } = req.body;
+  if (!recaptchaToken) {
+    return res.status(400).json({ message: "Chybí reCAPTCHA token." });
+  }
+
+  const isHuman = await verifyCaptcha(recaptchaToken);
+  if (!isHuman) {
+    return res.status(403).json({ message: "reCAPTCHA ověření selhalo." });
   }
 
   const transporter = nodemailer.createTransport({
@@ -19,7 +41,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const isCompany = !!req.body.company_name;
 
-    const subjectToAdmin = isCompany ? "Nová poptávka z firemního formuláře" : "Nová poptávka ze svatebního formuláře";
+    const subjectToAdmin = isCompany
+      ? "Nová poptávka z firemního formuláře"
+      : "Nová poptávka ze svatebního formuláře";
 
     const textToAdmin = isCompany
       ? `
@@ -45,7 +69,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ? `Dobrý den,\n\nDěkujeme za zaslání firemní poptávky. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`
       : `Dobrý den,\n\nDěkujeme za zaslání svatební poptávky. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`;
 
-    // 1. E-mail tobě
     await transporter.sendMail({
       from: `"${isCompany ? req.body.company_name : req.body.name}" <${req.body.email}>`,
       to: process.env.EMAIL_TO,
@@ -53,7 +76,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       text: textToAdmin,
     });
 
-    // 2. Odpověď uživateli
     await transporter.sendMail({
       from: `"VideoJinak" <${process.env.EMAIL_USER}>`,
       to: req.body.email,
