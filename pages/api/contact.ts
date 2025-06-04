@@ -66,8 +66,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `;
 
     const textToUser = isCompany
-      ? `Dobrý den,\n\nDěkujeme za zaslání firemní poptávky. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`
-      : `Dobrý den,\n\nDěkujeme za zaslání svatební poptávky. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`;
+      ? `Dobrý den,\n\nInformace dorazili v pořádku, děkujeme. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`
+      : `Dobrý den,\n\nInformace dorazili v pořádku, děkujeme. Brzy se Vám ozveme.\n\nS pozdravem,\nLukáš Šimandl – VideoJinak`;
 
     await transporter.sendMail({
       from: `"${isCompany ? req.body.company_name : req.body.name}" <${req.body.email}>`,
