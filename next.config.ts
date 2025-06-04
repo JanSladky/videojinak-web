@@ -14,7 +14,7 @@ const nextConfig = {
             value: `
               default-src 'self';
               script-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net 'unsafe-inline';
-              frame-src https://www.google.com https://www.recaptcha.net;
+              frame-src https://www.youtube.com https://www.google.com https://www.recaptcha.net;
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: https://www.gstatic.com https://www.google.com;
               connect-src 'self' https://www.google.com https://www.recaptcha.net;
