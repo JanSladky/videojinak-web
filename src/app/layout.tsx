@@ -8,6 +8,9 @@ export const metadata = {
     "Točíme firemní videa, svatební videoklipy, produktové reklamy i zábavné promo spoty. Kreativní zpracování, profesionální kvalita, cit pro detail a nápaditý střih – to je Videojinak.cz.",
   keywords: [
     "firemní video",
+    "Profesionální svatební video",
+    "Profesionální svatební kameraman",
+    "Firemní video",
     "svatební video",
     "reklamní spot",
     "promo video",
