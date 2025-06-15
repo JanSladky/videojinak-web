@@ -26,7 +26,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   ];
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
           <Link href="/">
@@ -81,6 +81,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           Jan Sladký
         </a>
       </footer>
-    </>
+    </div>
   );
 }
