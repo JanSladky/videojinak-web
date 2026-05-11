@@ -34,13 +34,13 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
             <Image src="/images/logo.png" alt="Videojinak logo" width={160} height={40} priority />
           </Link>
 
-          {/* Hamburger – zobrazit do velikosti LG */}
-          <button onClick={toggleMenu} className="lg:hidden focus:outline-none text-gray-800 text-4xl" aria-label="Toggle menu">
+          {/* Hamburger */}
+          <button onClick={toggleMenu} className="min-[1201px]:hidden focus:outline-none text-gray-800 text-4xl" aria-label="Toggle menu">
             {menuOpen ? "✕" : "☰"}
           </button>
 
-          {/* Desktop menu – až od LG */}
-          <nav className="hidden lg:flex flex-wrap gap-x-4 gap-y-2 font-medium max-w-full">
+          {/* Desktop menu */}
+          <nav className="hidden min-[1201px]:flex flex-wrap gap-x-4 gap-y-2 font-medium max-w-full">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -58,7 +58,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         {/* Mobile menu */}
 
         {menuOpen && (
-          <nav className="lg:hidden fixed inset-0 bg-white z-40 flex flex-col">
+          <nav className="min-[1201px]:hidden fixed inset-0 bg-white z-40 flex flex-col">
             <div className="flex-grow flex flex-col justify-evenly items-center text-xl font-semibold text-center px-6 py-10">
               {navItems.map((item) => (
                 <Link
