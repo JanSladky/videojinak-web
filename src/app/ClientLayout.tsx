@@ -21,6 +21,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     { href: "/showreel", label: "Showreel" },
     { href: "/svatebni-nataceni", label: "Svatební natáčení" },
     { href: "/promovidea", label: "Promovidea" },
+    { href: "/ai-tvorba", label: "AI tvorba" },
     { href: "/backstage", label: "BackStage" },
     { href: "/kontakt", label: "Kontakt" },
   ];
