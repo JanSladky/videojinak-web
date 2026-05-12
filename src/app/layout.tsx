@@ -21,9 +21,11 @@ export async function generateMetadata(): Promise<any> {
   const favicon = settings.site_favicon ? (typeof settings.site_favicon === 'string' ? settings.site_favicon.replace("http://127.0.0.1:8000", "https://api.videojinak.cz") : settings.site_favicon.url?.replace("http://127.0.0.1:8000", "https://api.videojinak.cz")) : "/favicon.ico";
 
   // Keywords z administrace nebo fallback
-  let siteKeywords = settings.site_keywords 
+  let rawKeywords = settings.site_keywords 
     ? (typeof settings.site_keywords === 'string' ? settings.site_keywords : settings.site_keywords.join(", "))
     : "firemní video, svatební video, reklamní spot, promo video, produktové video, videoprodukce, videotvorba, video pro firmy, svatba video, komerční video, videoklip, Videojinak.cz, profesionální kameraman, natáčení videí, zpracování videa";
+  
+  let siteKeywords = rawKeywords.split(",").map((s: string) => s.trim()).filter(Boolean).join(", ");
 
   return {
     title: {
