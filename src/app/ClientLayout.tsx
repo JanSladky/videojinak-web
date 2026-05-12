@@ -16,7 +16,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   const mainClass = isHomepage ? "" : "pt-[80px]";
 
   const navItems = [
-    { href: "/", label: "Úvod" },
     { href: "/o-mne", label: "O mně" },
     { href: "/showreel", label: "Showreel" },
     { href: "/svatebni-nataceni", label: "Svatební natáčení" },
@@ -75,7 +74,14 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         )}
       </header>
 
-      <main className={`${mainClass} flex-grow`}>{children}</main>
+      <main className={`${mainClass} flex-grow`}>
+        {isHomepage && (
+          <h1 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', border: 0 }}>
+            Videojinak.cz – Firemní, svatební a reklamní videa
+          </h1>
+        )}
+        {children}
+      </main>
       <footer className="text-center text-sm py-6 bg-black text-white">
         © {new Date().getFullYear()} <span className="">Web vyrobil - </span>
         <a href="https://www.jansladky.eu" target="_blank" className="underline">
